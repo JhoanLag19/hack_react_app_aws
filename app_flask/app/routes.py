@@ -1,24 +1,8 @@
-from flask import Blueprint, request, jsonify, send_from_directory
+from flask import Blueprint, request, jsonify
 from .models import db, Usuario
 import os
 
 api = Blueprint('api', __name__)
-
-# Importación de módulo os para interactuar con mis carpetas donde está el frontend y el build para producción
-
-frontend_folder = os.path.join(os.getcwd(),"..","..","app_react")
-build_folder = os.path.join(os.getcwd(),frontend_folder,"build")
-
-# Ruta que trae mis documentos estáticos desde la carpeta "build", ubicada en el directorio app_react (donde está el frontend)
-
-@api.route("/", defaults={"filename":""})
-@api.route("/<path:filename>")
-def index(filename):
-    if not filename:
-        filename = "index.html"
-    return send_from_directory(build_folder,filename)
-
-# Rutas para el CRUD
 
 @api.route('/usuarios', methods=['GET'])
 def get_usuarios():
